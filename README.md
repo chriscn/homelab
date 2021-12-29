@@ -19,10 +19,10 @@ Status: **Beta**
 - [ ] Continous Integration / Deployment
 - [ ] Status monitoring of individual components and applications
 
-### naming structure
+### Folder directory structure
 `<location>/<name>`
 - `location`: location in which the physical machine resides
 - `name`: usually the hostname of the machine
 
-### domain
+### Domain
 Using the `chrisnethercott.co.uk` domain; each device in the student/mum location should have `<name>.chrisnethercott.co.uk` as an SSL certificate if it has any exposed web configuration
