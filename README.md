@@ -7,9 +7,12 @@ I run a small 'homelab' and wanted to begin documenting everything (for when I b
 
 I recently purchased a new HP Microserver Gen 8; which will be my staging / playing around device. I'd like to deploy and manage it through [ansible](https://www.ansible.com/) although I've not used it before.
 
-### Features
+### Roadmap
 
-Status: **Beta**
+Status: **Alpha**
+
+- [ ] Add custom groups for location or machine type
+- [ ] Connect and disconnect a VPN before contacting specific hosts
 
 - [ ] Deploying common applications
 - [ ] Deploying game applications: Factorio and Minecraft
