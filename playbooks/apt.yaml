@@ -8,6 +8,7 @@
         upgrade: 'yes'
 - name: 'update distrubution'
   hosts: all
+  become: yes
   tasks:
     - name: apt
       apt:
