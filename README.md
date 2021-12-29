@@ -1,7 +1,7 @@
 # homelab
 I run a small 'homelab' and wanted to begin documenting everything (for when I break it); this repository will eventually contain documentation and ansible playbooks.
 ## naming structure
-`<location>/<name>`
+**<location>/<name>**
 - `location`: location in which the physical machine resides
 - `name`: usually the hostname of the machine
 ## domain
