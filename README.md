@@ -7,6 +7,8 @@ I run a small 'homelab' and wanted to begin documenting everything (for when I b
 
 I recently purchased a new HP Microserver Gen 8; which will be my staging / playing around device. I'd like to deploy and manage it through [ansible](https://www.ansible.com/) although I've not used it before.
 
+As well as the HP Microserver, I manage approximately 10-12 Raspberry Pi's. Some have duplicated functions (PiHole, PiVPN etc).
+
 ### Roadmap
 
 Status: **Alpha**
