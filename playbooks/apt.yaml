@@ -1,7 +1,15 @@
-- hosts: all
+- name: 'update local packages'
+  hosts: all
   become: yes
   tasks:
     - name: apt
       apt:
-          update_cache: yes
-          upgrade: 'yes'
+        update_cache: yes
+        upgrade: 'yes'
+- name: 'update distrubution'
+  hosts: all
+  tasks:
+    - name: apt
+      apt:
+        update_cache: yes
+        upgrade: 'dist'
