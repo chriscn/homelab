@@ -1,0 +1,12 @@
+- name: 'update apt packages and distrubution'
+  hosts: home
+  become: yes
+  tasks:
+    - name: 'update apt packages'
+      apt:
+        update_cache: yes
+        upgrade: 'yes'
+    - name: 'update distrubution'
+      apt:
+        update_cache: yes
+        upgrade: 'dist'
