@@ -23,7 +23,7 @@ I manage approximately 10-12 Raspberry Pi's between three family locations. Some
 
 Status: **Alpha**
 
-- [ ] Create custom inventory system (that works will VPN etc)
+- [ ] Create custom inventory system (that works will VPN etc) see #1
 - [ ] Connect and disconnect a VPN before contacting specific hosts
 
 - [ ] Deploying common applications
