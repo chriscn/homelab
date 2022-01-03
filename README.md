@@ -11,7 +11,7 @@ This HP Microserver runs an Intel Xeon E2-1265v2 with 16GB of ram; along with a 
 
 ### Tritium
 
-My older HP Microserver Gen 8; containing 16GB of ram, Xeon E3-1260L and 16TB (4x4TB) of raw storage. It is managed through unRAID which one parity disk.
+My older HP Microserver Gen 8; containing 16GB of ram, Xeon E3-1260L and 16TB (4x4TB) of raw storage. It is managed through unRAID with one parity disk.
 
 ### Raspberry Pi
 
