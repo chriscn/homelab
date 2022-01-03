@@ -1,0 +1,12 @@
+# Install ZSH, oh-my-zsh. change my default shell. Copy my custom theme install zsh-autosuggestions and zsh-autosyntax as plugins configure them
+- name: 'install zsh'
+  hosts: all
+  tasks:
+    - name: 'update apt packages'
+      apt:
+        update_cache: yes
+        upgrade: 'yes'
+    - name: 'install zsh'
+      apt:
+        name: zsh
+- name: 'install oh-my-zsh'
