@@ -1,5 +1,12 @@
 version: "3.9"
 services:
+  factorio:
+    image: factoriotools/factorio
+    container_name: factorio
+    ports:
+     - "34197:34197/udp"
+    volumes:
+     - /opt/factorio:/factorio
   swag:
     image: ghcr.io/linuxserver/swag
     container_name: swag
@@ -15,8 +22,53 @@ services:
       - DNSPLUGIN=route53
       - EMAIL=ccnethercott@gmail.com
     volumes:
-      - /home/christopher/homelab/appdata/swag:/config
+      - /var/appdata/swag:/config
     ports:
       - 443:443
       - 80:80
     restart: always
+  paperless:
+    image: lscr.io/linuxserver/paperless-ng
+    container_name: paperless
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - PAPERLESS_AUTO_LOGIN_USERNAME=christopher
+    volumes:
+      - /var/appdata/paperless:/config
+      - /var/paperless:/data
+    restart: unless-stopped
+  homer:
+    image: b4bz/homer
+    container_name: homer
+    volumes:
+      - /var/appdata/homer:/www/assets
+    environment:
+      - UID=1000
+      - GID=1000
+  sonarr:
+    image: lscr.io/linuxserver/sonarr
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - /var/appdata/sonarr:/config
+      - /var/media/TV:/tv
+    restart: unless-stopped
+  radarr:
+    image: lscr.io/linuxserver/radarr
+    container_name: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - /var/appdata/radarr:/config
+      - /var/media/Film:/movies
+    restart: unless-stopped
+networks:
+  default:
+    name: lsio
