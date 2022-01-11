@@ -57,6 +57,16 @@ services:
       - /var/appdata/nzbget:/config
       - /var/downloads:/downloads
     restart: unless-stopped
+  nzbhydra2:
+    image: lscr.io/linuxserver/nzbhydra2
+    container_name: nzbhydra2
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - /var/appdata/nzbhydra2:/config
+      - /var/downloads:/downloads
+    restart: unless-stopped
   sonarr:
     image: lscr.io/linuxserver/sonarr
     container_name: sonarr
