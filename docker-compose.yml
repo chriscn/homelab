@@ -39,14 +39,6 @@ services:
       - /var/appdata/paperless:/config
       - /var/paperless:/data
     restart: unless-stopped
-  homer:
-    image: b4bz/homer
-    container_name: homer
-    volumes:
-      - /var/appdata/homer:/www/assets
-    environment:
-      - UID=1000
-      - GID=1000
   nzbget:
     image: lscr.io/linuxserver/nzbget
     container_name: nzbget
