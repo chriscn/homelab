@@ -57,9 +57,9 @@ services:
       - /var/appdata/nzbget:/config
       - /var/downloads:/downloads
     restart: unless-stopped
-  nzbhydra2:
+  nzbhydra:
     image: lscr.io/linuxserver/nzbhydra2
-    container_name: nzbhydra2
+    container_name: nzbhydra
     environment:
       - PUID=1000
       - PGID=1000
