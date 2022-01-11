@@ -47,6 +47,16 @@ services:
     environment:
       - UID=1000
       - GID=1000
+  nzbget:
+    image: lscr.io/linuxserver/nzbget
+    container_name: nzbget
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - /var/appdata/nzbget:/config
+      - /var/downloads:/downloads
+    restart: unless-stopped
   sonarr:
     image: lscr.io/linuxserver/sonarr
     container_name: sonarr
@@ -57,6 +67,7 @@ services:
     volumes:
       - /var/appdata/sonarr:/config
       - /var/media/TV:/tv
+      - /var/downloads:/downloads
     restart: unless-stopped
   radarr:
     image: lscr.io/linuxserver/radarr
@@ -68,6 +79,7 @@ services:
     volumes:
       - /var/appdata/radarr:/config
       - /var/media/Film:/movies
+      - /var/downloads:/downloads
     restart: unless-stopped
 networks:
   default:
