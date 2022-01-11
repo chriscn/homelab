@@ -27,6 +27,14 @@ services:
       - 443:443
       - 80:80
     restart: always
+  authelia:
+    image: authelia/authelia:4.21.0
+    container_name: authelia
+    environment:
+      - TZ=Europe/London
+    volumes:
+      - /var/appdata/authelia:/config
+    restart: unless-stopped
   paperless:
     image: lscr.io/linuxserver/paperless-ng
     container_name: paperless
