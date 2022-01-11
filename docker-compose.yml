@@ -88,7 +88,7 @@ services:
       - TZ=Europe/London
     volumes:
       - /var/appdata/radarr:/config
-      - /var/media/Film:/movies
+      - /var/media/Film:/film
       - /var/downloads:/downloads
     restart: unless-stopped
 networks:
