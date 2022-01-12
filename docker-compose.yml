@@ -91,7 +91,7 @@ services:
       - /var/media/Film:/film
       - /var/downloads:/downloads
     restart: unless-stopped
-   qbittorrent:
+  qbittorrent:
     image: lscr.io/linuxserver/qbittorrent
     container_name: qbittorrent
     environment:
