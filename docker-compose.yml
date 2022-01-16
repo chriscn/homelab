@@ -97,6 +97,18 @@ services:
       - /var/media/Film:/film
       - /var/downloads:/downloads
     restart: unless-stopped
+  lidarr:
+    image: lscr.io/linuxserver/lidarr
+    container_name: lidarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - /var/appdata/lidarr:/config
+      - /var/media/Music:/music
+      - /var/downloads:/downloads
+    restart: unless-stopped
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent
     container_name: qbittorrent
