@@ -31,8 +31,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=America/New_York
-      - PMA_ABSOLUTE_URI=https://phpmyadmin.chrisnethercott.co.uk #optional
+      - TZ=Europe/London
     volumes:
       - /var/appdata/phpmyadmin:/config
     restart: unless-stopped
