@@ -13,6 +13,18 @@ services:
      - "34197:34197/udp"
     volumes:
      - /opt/factorio:/factorio
+  mariadb:
+    image: lscr.io/linuxserver/mariadb
+    container_name: mariadb
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - MYSQL_ROOT_PASSWORD=my_root_passwd
+    volumes:
+      - /var/appdata/mariadb:/config
+    ports:
+      - 3306
+    restart: always
   swag:
     image: ghcr.io/linuxserver/swag
     container_name: swag
