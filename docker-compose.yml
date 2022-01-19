@@ -25,6 +25,17 @@ services:
     ports:
       - 3306
     restart: always
+  phpmyadmin:
+    image: lscr.io/linuxserver/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+      - PMA_ABSOLUTE_URI=https://phpmyadmin.chrisnethercott.co.uk #optional
+    volumes:
+      - /var/appdata/phpmyadmin:/config
+    restart: unless-stopped
   swag:
     image: ghcr.io/linuxserver/swag
     container_name: swag
