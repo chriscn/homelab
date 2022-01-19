@@ -23,7 +23,7 @@ services:
     volumes:
       - /var/appdata/mariadb:/config
     ports:
-      - 3306
+      - 3306:3306
     restart: always
   phpmyadmin:
     image: lscr.io/linuxserver/phpmyadmin
