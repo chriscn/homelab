@@ -32,6 +32,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/London
+      - PMA_ARBITRARY=1
     volumes:
       - /var/appdata/phpmyadmin:/config
     restart: unless-stopped
