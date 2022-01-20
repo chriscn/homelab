@@ -32,7 +32,8 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/London
-      - PMA_ARBITRARY=1
+      - PMA_HOSTS=mariadb
+      - PMA_ABSOLUTE_URI=https://phpmyadmin.chrisnethercott.co.uk
     volumes:
       - /var/appdata/phpmyadmin:/config
     restart: unless-stopped
