@@ -158,8 +158,6 @@ services:
     volumes:
       - /var/appdata/nextcloud:/config
       - /var/appdata/nextcloud-data:/data
-    ports:
-      - 443:443
     restart: unless-stopped
 networks:
   default:
