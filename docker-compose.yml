@@ -167,9 +167,7 @@ services:
       - PGID=1000
       - TZ=Europe/London
     volumes:
-      - <path to data>:/config
-    ports:
-      - 8181:8181
+      - /var/appdata/tautulli:/config
     restart: unless-stopped
 networks:
   default:
