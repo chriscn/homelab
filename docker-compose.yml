@@ -169,6 +169,18 @@ services:
     volumes:
       - /var/appdata/tautulli:/config
     restart: unless-stopped
+  minecraft:
+    image: itzg/minecraft-server
+    container_name: minecraft
+    environment:
+      - TYPE=PAPER
+      - EULA=true
+      - SPIGET_RESOURCES=9089,34315,28140,8631,31585,67436 # EssentialsX, Vault, LuckPerms, CoreProtect, OnePlayerSleep, Tree Assist
+    ports:
+      - 25565:25565
+    volumes:
+      - /var/appdata/minecraft:/data
+    restart: unless-stopped
 networks:
   default:
     name: lsio
