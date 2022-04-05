@@ -175,6 +175,7 @@ services:
     environment:
       - TYPE=PAPER
       - EULA=true
+      - MEMORY=8G
       # EssentialsX, Vault, LuckPerms, CoreProtect, OnePlayerSleep, Tree Assist
     ports:
       - 25565:25565
