@@ -182,6 +182,16 @@ services:
     volumes:
       - /var/appdata/minecraft:/data
     restart: unless-stopped
+  heimdall:
+    image: lscr.io/linuxserver/heimdall
+    container_name: heimdall
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - /var/appdata/heimdall:/config
+    restart: unless-stopped
 networks:
   default:
     name: lsio
