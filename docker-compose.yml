@@ -73,6 +73,7 @@ services:
       - PGID=1000
       - TZ=Europe/London
       - PAPERLESS_AUTO_LOGIN_USERNAME=christopher
+      - PAPERLESS_URL=https://paperless.chrisnethercott.co.uk
     volumes:
       - /var/appdata/paperless:/config
       - /var/paperless:/data
