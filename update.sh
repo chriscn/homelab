@@ -1,8 +1,6 @@
 #!/bin/sh
-
-# A simple script that perodicially 
 echo "Running at $(date -R)"
 
-git pull
+git pull --ff--only
 
 docker-compose up -d
