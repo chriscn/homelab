@@ -87,17 +87,6 @@ services:
     volumes:
       - /var/appdata/nzbget:/config
       - /var/downloads:/downloads
-  sabnzbd:
-    image: ghcr.io/linuxserver/sabnzbd
-    container_name: sabnzbd
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/London
-    volumes:
-      - /var/appdata/sabnzbd:/config
-      - /var/downloads:/downloads
-    restart: unless-stopped
   nzbhydra2:
     image: ghcr.io/linuxserver/nzbhydra2
     container_name: nzbhydra2
