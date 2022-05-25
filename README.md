@@ -1,19 +1,56 @@
-# homelab
+<div align="center">
 
-I run a small 'homelab' and wanted to begin documenting everything (for when I break it); this repository will eventually contain documentation and ansible playbooks.
+# Christopher's Homelab
 
-## Hardware
+<!-- ANCHOR: introduction -->
 
-### Felix (HP Microserver Gen 8)
+This project aims to be a fully document, and redeploy my local homelab. It achieves this by using [Infrastructure as Code](https://en.wikipedia.org/wiki/Infrastructure_as_code) and [GitOps](https://www.weave.works/technologies/gitops) to automate provisioning, deploying, operating, and self updating. With the aim being that everything is documented within service files.
 
-I recently purchased a new HP Microserver Gen 8; which will be my staging / playing around device. I'd like to deploy and manage it through [ansible](https://www.ansible.com/) although I've not used it before.
+It is heavily inspired by [khuedon](https://github.com/khuedoan/homelab) in terms of project structure and setup.
 
-This HP Microserver runs an Intel Xeon E2-1265v2 with 16GB of ram; along with a 500GB SSD. It is a general purpose server with limited storage, any storage required can be mounted over an NFS share to Tritium.
+<!-- ANCHOR_END: introduction -->
 
-### Tritium (HP Microserver Gen 8)
+</div>
 
-My older HP Microserver Gen 8; containing 16GB of ram, Xeon E3-1260L and 16TB (4x4TB) of raw storage. It is managed through unRAID with one parity disk. There are a few NFS shares that will be mounted
+## Overview
 
-### TBC (Dell R720)
+Status: **Hypothetical**
 
-This is my latest addition to the rack; it is currently powered off since I haven't yet found a use for it however it is my most powerful server. The other issue is that it is stored in a cupboard and quite out of the way. I'd like to dust it off when I move house and try and get it to work with the rest of the Network. I believe it has 16Cores and 256GB of Ram.
+This section provides a high level overview of the project. Please see the [documentation]() for further information.
+
+### Hardware
+
+Each server at the moment has a specific role; one is Storage, one is for running services such as [Home Assistant](https://home-assistant.io), and one just sits for me to play with.
+
+All three are `HP Microserver Gen8` with the following specs:
+
+- CPU: `Xeon E3-1265L v3`
+- RAM: `16GB DDR3 ECC`
+- Storage: `SSD`
+- Network: `2x 1GB Port Bonded` + `iLO Management`
+
+Eventually I'd like to standardize all their configurations, just to have a singular SSD and then block storage. Ultimately to mount over the network with [GlusterFS](https://www.gluster.org/) across all three nodes. This should lead me with ~48TB of raw storage across the network.
+
+In the future I'd likely fit all three with a 10GB Network Card linking with a [MikroTik](https://mikrotik.com/product/crs305_1g_4s_in) switch, so that they can operate at 10GB over an internal network.
+
+### Stack
+
+Each `node` will run the latest LTS version of Ubuntu Server, as of time of writing that is `22.04 LTS`. How it gets to that process is the discovery of this repository.
+
+### Applications
+
+It should provision, deploy, automate and update the following applications:
+
+- Plex Media Server
+- Sonarr, Radarr, Lidarr etc
+- NZBGet & NZBHydra2
+- MariaDB with PHPMyAdmin
+- Paperless-ngx
+
+All services should then be accessible at `<name>.chrisnethercott.co.uk`.
+  
+## In The Mean Time
+
+I do have a fairly powerful Dell R720 sitting under my bed that I could load up my current storage to be a temporary storage whilst I get the rest of the system online.
+
+There is a small amount of mission critical data, personal backups etc but the rest is Linux ISOs that can easily (although time consumingly) reacquired.
