@@ -1,7 +1,5 @@
-# appdata
-appdata/
-
 # macOS
 .DS_Store
 
+# Environmental Secrets
 .env
