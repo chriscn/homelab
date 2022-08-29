@@ -76,7 +76,7 @@ services:
       - PAPERLESS_URL=https://paperless.chrisnethercott.co.uk
     volumes:
       - /var/appdata/paperless:/config
-      - /var/paperless:/data
+      - /var/nfs/paperless:/data
     restart: unless-stopped
   nzbget:
     image: ghcr.io/linuxserver/nzbget
