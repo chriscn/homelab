@@ -107,7 +107,7 @@ services:
       - TZ=Europe/London
     volumes:
       - /var/appdata/sonarr:/config
-      - /var/media/TV:/tv
+      - /var/nfs/media/TV:/tv
       - /var/downloads:/downloads
     restart: unless-stopped
   radarr:
@@ -119,7 +119,7 @@ services:
       - TZ=Europe/London
     volumes:
       - /var/appdata/radarr:/config
-      - /var/media/Film:/film
+      - /var/nfs/media/Film:/film
       - /var/downloads:/downloads
     restart: unless-stopped
   lidarr:
@@ -131,7 +131,7 @@ services:
       - TZ=Europe/London
     volumes:
       - /var/appdata/lidarr:/config
-      - /var/media/Music:/music
+      - /var/nfs/media/Music:/music
       - /var/downloads:/downloads
     restart: unless-stopped
   qbittorrent:
