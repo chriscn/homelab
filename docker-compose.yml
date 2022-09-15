@@ -51,6 +51,7 @@ services:
       - VALIDATION=dns
       - DNSPLUGIN=route53
       - EMAIL=ccnethercott@gmail.com
+      - DOCKER_MODS=linuxserver/mods:swag-dashboard
     volumes:
       - /var/appdata/swag:/config
     ports:
