@@ -1,0 +1,19 @@
+- hosts: docker
+  tasks:
+    - name: check docker is active
+      service:
+        name: docker
+        state: started
+        enabled: yes
+    - name: copy docker-compose
+      copy:
+        src: ../docker-compose.yml
+        dest: ~/docker-compose.yml
+        follow: yes
+    - name: run docker-compose up -d
+      docker_compose:
+        project_src: .
+      register: output
+
+    - debug:
+        var: output

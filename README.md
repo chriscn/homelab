@@ -14,9 +14,9 @@ It is heavily inspired by [khuedon](https://github.com/khuedoan/homelab) in term
 
 ## Overview
 
-Status: **Hypothetical**
+Status: **Early Alpha**
 
-This section provides a high level overview of the project. Please see the [documentation]() for further information.
+This section provides a high level overview of the project. Please see the [documentation](#deployment) for further information.
 
 ### Hardware
 
@@ -33,24 +33,12 @@ Eventually I'd like to standardize all their configurations, just to have a sing
 
 In the future I'd likely fit all three with a 10GB Network Card linking with a [MikroTik](https://mikrotik.com/product/crs305_1g_4s_in) switch, so that they can operate at 10GB over an internal network.
 
-### Stack
+### Deployment
 
-Each `node` will run the latest LTS version of Ubuntu Server, as of time of writing that is `22.04 LTS`. How it gets to that process is the discovery of this repository.
+Currently all applications are detailed in [docker-compose.yml](./docker-compose.yml). There is an ansible [playbook](./playbook/deploy-docker.yml); which is responsible for deploying the new changes in the compose file.
 
-### Applications
+```zsh
+ansible-playbook playbook/deploy-docker.yml -K 
+```
 
-It should provision, deploy, automate and update the following applications:
-
-- Plex Media Server
-- Sonarr, Radarr, Lidarr etc
-- NZBGet & NZBHydra2
-- MariaDB with PHPMyAdmin
-- Paperless-ngx
-
-All services should then be accessible at `<name>.chrisnethercott.co.uk`.
-  
-## In The Mean Time
-
-I do have a fairly powerful Dell R720 sitting under my bed that I could load up my current storage to be a temporary storage whilst I get the rest of the system online.
-
-There is a small amount of mission critical data, personal backups etc but the rest is Linux ISOs that can easily (although time consumingly) reacquired.
+The above command will deploy the changes to the `docker` node.
