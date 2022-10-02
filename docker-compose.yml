@@ -34,6 +34,8 @@ services:
       - TZ=Europe/London
       - PMA_HOSTS=mariadb
       - PMA_ABSOLUTE_URI=https://phpmyadmin.chrisnethercott.co.uk
+      - PMA_USER=root
+      - PMA_PASSWORD=my_root_passwd
     volumes:
       - /var/appdata/phpmyadmin:/config
     restart: unless-stopped
