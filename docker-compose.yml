@@ -38,6 +38,8 @@ services:
       - PMA_PASSWORD=my_root_passwd
     volumes:
       - /var/appdata/phpmyadmin:/config
+    depends_on:
+      - mariadb
     restart: unless-stopped
   swag:
     image: ghcr.io/linuxserver/swag
@@ -67,6 +69,8 @@ services:
       - TZ=Europe/London
     volumes:
       - /var/appdata/authelia:/config
+    depends_on:
+      - swag
     restart: unless-stopped
   paperless:
     image: ghcr.io/linuxserver/paperless-ngx
@@ -80,6 +84,9 @@ services:
     volumes:
       - /var/appdata/paperless:/config
       - /var/nfs/paperless:/data
+    depends_on:
+      - swag
+      - authelia
     restart: unless-stopped
   nzbget:
     image: ghcr.io/linuxserver/nzbget
@@ -100,6 +107,10 @@ services:
     volumes:
       - /var/appdata/nzbhydra2:/config
       - /var/downloads:/downloads
+    depends_on:
+      - swag
+      - authelia
+      - nzbget
     restart: unless-stopped
   sonarr:
     image: ghcr.io/linuxserver/sonarr
@@ -112,6 +123,11 @@ services:
       - /var/appdata/sonarr:/config
       - /var/nfs/media/TV:/tv
       - /var/downloads:/downloads
+    depends_on:
+      - swag
+      - authelia
+      - nzbget
+      - nzbhydra2
     restart: unless-stopped
   radarr:
     image: ghcr.io/linuxserver/radarr
@@ -124,6 +140,11 @@ services:
       - /var/appdata/radarr:/config
       - /var/nfs/media/Film:/film
       - /var/downloads:/downloads
+    depends_on:
+      - swag
+      - authelia
+      - nzbget
+      - nzbhydra2
     restart: unless-stopped
   lidarr:
     image: ghcr.io/linuxserver/lidarr
@@ -136,6 +157,11 @@ services:
       - /var/appdata/lidarr:/config
       - /var/nfs/media/Music:/music
       - /var/downloads:/downloads
+    depends_on:
+      - swag
+      - authelia
+      - nzbget
+      - nzbhydra2
     restart: unless-stopped
   qbittorrent:
     image: ghcr.io/linuxserver/qbittorrent
@@ -151,6 +177,9 @@ services:
     ports:
       - 6881:6881
       - 6881:6881/udp
+    depends_on:
+      - swag
+      - authelia
     restart: unless-stopped
   nextcloud:
     image: ghcr.io/linuxserver/nextcloud
@@ -162,6 +191,10 @@ services:
     volumes:
       - /var/appdata/nextcloud:/config
       - /var/appdata/nextcloud-data:/data
+    depends_on:
+      - swag
+      - authelia
+      - mariadb
     restart: unless-stopped
   tautulli:
     image: ghcr.io/linuxserver/tautulli
@@ -172,6 +205,9 @@ services:
       - TZ=Europe/London
     volumes:
       - /var/appdata/tautulli:/config
+    depends_on:
+      - swag
+      - authelia
     restart: unless-stopped
   heimdall:
     image: ghcr.io/linuxserver/heimdall
@@ -182,6 +218,9 @@ services:
       - TZ=Europe/London
     volumes:
       - /var/appdata/heimdall:/config
+    depends_on:
+      - swag
+      - authelia
     restart: unless-stopped
 networks:
   default:
