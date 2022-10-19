@@ -222,6 +222,17 @@ services:
       - swag
       - authelia
     restart: unless-stopped
+  ddns-route53:
+    image: crazymax/ddns-route53:latest
+    container_name: ddns-route53
+    environment:
+      - "TZ=Europe/London"
+      - "SCHEDULE=*/30 * * * *"
+      - "LOG_LEVEL=info"
+      - "LOG_JSON=false"
+    volumes:
+      - "/var/appdata/ddns-route53/ddns-route53.yml:/ddns-route53.yml:ro"
+    restart: always
 networks:
   default:
     name: lsio
