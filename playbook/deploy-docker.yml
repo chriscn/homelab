@@ -1,19 +1,16 @@
-- hosts: docker
+- name: Copy and deploy docker_compose
+  hosts: docker
   tasks:
-    - name: check docker is active
-      service:
-        name: docker
-        state: started
-        enabled: yes
-    - name: copy docker-compose
-      copy:
+    - name: Copy docker-compose.yml
+      ansible.builtin.copy:
         src: ../docker-compose.yml
         dest: ~/docker-compose.yml
-        follow: yes
-    - name: run docker-compose up -d
-      docker_compose:
+        mode: 0700
+        follow: true
+    - name: Run docker-compose up -d
+      community.docker.docker_compose:
         project_src: .
       register: output
-
-    - debug:
+    - name: Print debugging information
+      debug:
         var: output
