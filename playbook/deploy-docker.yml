@@ -12,5 +12,5 @@
         project_src: .
       register: output
     - name: Print debugging information
-      debug:
+      ansible.builtin.debug:
         var: output
