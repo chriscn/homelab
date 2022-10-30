@@ -227,7 +227,7 @@ services:
     container_name: ddns-route53
     environment:
       - "TZ=Europe/London"
-      - "SCHEDULE=*/30 * * * *"
+      - "SCHEDULE=*/5 * * * *"
       - "LOG_LEVEL=info"
       - "LOG_JSON=false"
     volumes:
