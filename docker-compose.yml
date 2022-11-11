@@ -6,13 +6,6 @@ services:
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-  factorio:
-    image: factoriotools/factorio
-    container_name: factorio
-    ports:
-     - "34197:34197/udp"
-    volumes:
-     - /opt/factorio:/factorio
   mariadb:
     image: ghcr.io/linuxserver/mariadb
     container_name: mariadb
