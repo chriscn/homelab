@@ -226,6 +226,17 @@ services:
     volumes:
       - "/var/appdata/ddns-route53/ddns-route53.yml:/ddns-route53.yml:ro"
     restart: always
+  factorio:
+    image: factoriotools/factorio:stable
+    container_name: factorio
+    environment:
+      - UPDATE_MODS_ON_START=true
+    ports:
+      - "34197:34197/udp"
+      - "27015:27015/tcp"
+    volumes:
+      - /var/appdata/factorio:/factorio
+    restart: unless-stopped
 networks:
   default:
     name: lsio
