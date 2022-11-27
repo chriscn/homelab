@@ -1,9 +1,9 @@
-- name: Copy and deploy docker_compose
-  hosts: docker
+- name: Copy and deploy docker_compose (media)
+  hosts: media
   tasks:
     - name: Copy docker-compose.yml
       ansible.builtin.copy:
-        src: ../docker-compose.yml
+        src: ../media/docker-compose.yml
         dest: ~/docker-compose.yml
         mode: 0700
         follow: true

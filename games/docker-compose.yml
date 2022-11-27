@@ -1,0 +1,58 @@
+version: "3.9"
+services:
+  factorio:
+    image: factoriotools/factorio:stable
+    container_name: factorio
+    environment:
+      - UPDATE_MODS_ON_START=true
+      - PUID=1000
+      - PGID=1000
+    ports:
+      - "34197:34197/udp"
+      - "27015:27015/tcp"
+    volumes:
+      - /var/appdata/factorio/main:/factorio
+    restart: unless-stopped
+  factorio-private:
+    image: factoriotools/factorio:stable
+    container_name: factorio-private
+    environment:
+      - UPDATE_MODS_ON_START=true
+      - PORT=34198
+      - RCON_PORT=27016
+      - PUID=1000
+      - PGID=1000
+    ports:
+      - "34198:34198/udp"
+      - "27016:27016/tcp"
+    volumes:
+      - /var/appdata/factorio/private:/factorio
+    restart: unless-stopped
+  skyfactory4:
+    image: itzg/minecraft-server:java8
+    container_name: skyfactory4
+    environment:
+      EULA: "true"
+      TYPE: "CURSEFORGE"
+      CF_SERVER_MOD: "SkyFactory-4_Server_4_2_4.zip"
+    ports:
+      - "25565:25565"
+    volumes:
+      - /var/appdata/minecraft/server/skyfactory4:/data
+    restart: unless-stopped
+  skyfactory4-backup:
+    image: itzg/mc-backup
+    container_name: skyfactory4-backup
+    environment:
+      BACKUP_METHOD: restic
+      INITIAL_DELAY: 5m
+      RESTIC_PASSWORD: skyfactory4
+      RESTIC_REPOSITORY: /backups
+      BACKUP_INTERVAL: "15m"
+      RCON_HOST: "skyfactory4"
+    volumes:
+      - /var/appdata/minecraft/server/skyfactory4:/data:ro
+      - /var/appdata/minecraft/backup/skyfactory4:/backups
+    depends_on:
+      - skyfactory4
+    restart: unless-stopped
