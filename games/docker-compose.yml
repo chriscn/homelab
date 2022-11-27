@@ -56,3 +56,7 @@ services:
     depends_on:
       - skyfactory4
     restart: unless-stopped
+
+networks:
+  default:
+    name: games
