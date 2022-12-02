@@ -239,6 +239,20 @@ services:
       - /etc/localtime:/etc/localtime:ro
     depends_on:
       - mariadb
+  influxdb:
+    image: influxdb:latest
+    container_name: influxdb
+    ports:
+      - 8086:8086
+    volumes:
+      - /var/appdata/influxdb:/var/lib/influxdb2
+    restart: unless-stopped
+  grafana:
+    image: grafana/grafana-oss:latest
+    container_name: grafana
+    depends_on:
+      - influxdb
+    restart: unless-stopped
 networks:
   default:
     name: lsio
