@@ -67,6 +67,7 @@ services:
     restart: unless-stopped
   redis:
     image: docker.io/library/redis:7
+    container_name: redis
     restart: unless-stopped
     volumes:
       - /var/appdata/redis:/data
@@ -75,7 +76,7 @@ services:
     container_name: paperless
     environment:
       - PAPERLESS_REDIS=redis://redis:6379
-      - PAPERLESS_DBENGINE:mariadb
+      - PAPERLESS_DBENGINE=mariadb
       - PAPERLESS_DBHOST=mariadb
       - PAPERLESS_DBUSER=paperless
       - PAPERLESS_DBPASS=paperless
