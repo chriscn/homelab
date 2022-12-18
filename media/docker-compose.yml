@@ -65,22 +65,37 @@ services:
     depends_on:
       - swag
     restart: unless-stopped
+  redis:
+    image: docker.io/library/redis:7
+    restart: unless-stopped
+    volumes:
+      - /var/appdata/redis:/data
   paperless:
-    image: ghcr.io/linuxserver/paperless-ngx
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
     container_name: paperless
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/London
-      - PAPERLESS_AUTO_LOGIN_USERNAME=christopher
+      - PAPERLESS_REDIS=redis://redis:6379
+      - PAPERLESS_DBENGINE:mariadb
+      - PAPERLESS_DBHOST=mariadb
+      - PAPERLESS_DBUSER=paperless
+      - PAPERLESS_DBPASS=paperless
+      - PAPERLESS_DBPORT=3306
       - PAPERLESS_URL=https://paperless.chrisnethercott.co.uk
+      - USERMAP_UID=1000
+      - USERMAP_GID=1000
     volumes:
-      - /var/appdata/paperless:/config
-      - /var/nfs/paperless:/data
+      - /var/appdata/paperless:/usr/src/paperless/data
+      - /mnt/paperless/media:/usr/src/paperless/media
+      - /mnt/paperless/consume:/usr/src/paperless/consume
+      - /mnt/paperless/export:/usr/src/paperless/export
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
     depends_on:
-      - swag
-      - authelia
-    restart: unless-stopped
+      - redis
+      - mariadb
   nzbget:
     image: ghcr.io/linuxserver/nzbget
     container_name: nzbget
