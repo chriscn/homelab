@@ -6,6 +6,21 @@ services:
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - VERSION=docker
+    volumes:
+      - /var/appdata/plex:/config
+      - /mnt/media/TV:/tv
+      - /mnt/media/Film:/film
+      - /mnt/media/Music:/music
+      - /mnt/media/Other\ Video:/video
+    restart: unless-stopped
   mariadb:
     image: ghcr.io/linuxserver/mariadb
     container_name: mariadb
@@ -130,7 +145,7 @@ services:
       - TZ=Europe/London
     volumes:
       - /var/appdata/sonarr:/config
-      - /var/nfs/media/TV:/tv
+      - /mnt/media/TV:/tv
       - /var/downloads:/downloads
     depends_on:
       - swag
@@ -147,7 +162,7 @@ services:
       - TZ=Europe/London
     volumes:
       - /var/appdata/radarr:/config
-      - /var/nfs/media/Film:/film
+      - /mnt/media/Film:/film
       - /var/downloads:/downloads
     depends_on:
       - swag
@@ -164,7 +179,7 @@ services:
       - TZ=Europe/London
     volumes:
       - /var/appdata/lidarr:/config
-      - /var/nfs/media/Music:/music
+      - /mnt/media/Music:/music
       - /var/downloads:/downloads
     depends_on:
       - swag
