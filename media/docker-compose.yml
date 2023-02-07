@@ -19,7 +19,7 @@ services:
       - /mnt/media/TV:/tv
       - /mnt/media/Film:/film
       - /mnt/media/Music:/music
-      - /mnt/media/Other\ Video:/video
+      - /mnt/media/:/media
     restart: unless-stopped
   mariadb:
     image: ghcr.io/linuxserver/mariadb
@@ -283,6 +283,17 @@ services:
     container_name: grafana
     depends_on:
       - influxdb
+    restart: unless-stopped
+  hammond:
+    image: alfhou/hammond
+    container_name: hammond
+    volumes:
+      - /var/appdata/hammond/config:/config
+      - /var/appdata/hammond:/assets
+    environment:
+       - JWT_SECRET=${HAMMOND_SECRET}
+    ports:
+      - 3000:3000
     restart: unless-stopped
 networks:
   default:
