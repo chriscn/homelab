@@ -293,21 +293,6 @@ services:
     environment:
        - JWT_SECRET=${HAMMOND_SECRET}
     restart: unless-stopped
-  ombi:
-    image: lscr.io/linuxserver/ombi:latest
-    container_name: ombi
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/London
-    volumes:
-      - /var/appdata/ombi:/config
-    depends_on:
-      - sonarr
-      - radarr
-      - plex
-      - tautulli
-    restart: unless-stopped
 
 networks:
   default:
