@@ -1,6 +1,11 @@
 - name: Copy and deploy docker_compose (media)
   hosts: media
   tasks:
+    - name: Copy placeholder html file
+      ansible.builtin.copy:
+        src: ../public/swag.html
+        dest: /var/appdata/swag/www/index.html
+        mode: 0700
     - name: Copy docker-compose.yml
       ansible.builtin.copy:
         src: ../media/docker-compose.yml
