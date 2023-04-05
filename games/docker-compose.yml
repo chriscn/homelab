@@ -55,6 +55,7 @@ services:
       - VERSION=1.19.3
     ports:
       - 8123:8123 # dynmap
+    restart: unless-stopped
   survival-backup:
     image: itzg/mc-backup
     container_name: survival-backup
