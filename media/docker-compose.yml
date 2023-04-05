@@ -97,6 +97,8 @@ services:
       - PAPERLESS_DBPASS=paperless
       - PAPERLESS_DBPORT=3306
       - PAPERLESS_URL=https://paperless.chrisnethercott.co.uk
+      - PAPERLESS_ALLOWED_HOSTS=localhost
+      - PAPERLESS_CORS_ALLOWED_HOSTS=https://localhost:8000
       - USERMAP_UID=1000
       - USERMAP_GID=1000
     volumes:
