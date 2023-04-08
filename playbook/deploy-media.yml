@@ -16,7 +16,3 @@
       community.docker.docker_compose:
         project_src: .
         remove_orphans: true
-      register: output
-    - name: Print debugging information
-      ansible.builtin.debug:
-        var: output
