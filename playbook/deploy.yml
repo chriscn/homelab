@@ -3,9 +3,11 @@
   tasks:
     - name: Copy .env file
       ansible.builtin.copy:
-        src: ../{{ inventory_hostname }}/.env
-        dest: ~/.env
+        src: "{{ item }}"
+        dest: ~/
         mode: 0700
+      with_fileglob:
+        - "../{{ inventory_hostname }}/.env*"
     - name: Copy docker-compose.yml
       ansible.builtin.copy:
         src: ../{{ inventory_hostname }}/docker-compose.yml
