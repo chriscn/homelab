@@ -295,6 +295,22 @@ services:
     environment:
        - JWT_SECRET=${HAMMOND_SECRET}
     restart: unless-stopped
+  firefly:
+    image: fireflyiii/core:version-6.0.7
+    container_name: firefly
+    restart: always
+    env_file: .env-firefly
+    depends_on:
+      - mariadb
+  firefly-importer:
+    image: fireflyiii/data-importer:latest
+    container_name: firefly-importer
+    restart: always
+    depends_on:
+      - firefly
+    ports:
+      - 8081:8080
+    env_file: .env-firefly-importer
 
 networks:
   default:
