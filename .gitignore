@@ -2,4 +2,4 @@
 .DS_Store
 
 # Environmental Secrets
-.env
+.env*
