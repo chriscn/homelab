@@ -1,0 +1,11 @@
+- name: Run Speedtest exporter
+  community.docker.docker_container:
+    name: prometheus_speedtest
+    image: billimek/prometheus-speedtest-exporter:latest
+    pull: true
+    restart_policy: always
+    networks:
+      - name: prometheus_priv
+        aliases: [speedtest]
+    ports:
+      - 9469:9469

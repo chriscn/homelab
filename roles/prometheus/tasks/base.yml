@@ -1,0 +1,9 @@
+- name: Create Prometheus docker network
+  community.docker.docker_network:
+    name: prometheus_priv
+    state: present
+
+- name: Create Prometheus config directory
+  ansible.builtin.file:
+    name: /etc/prometheus
+    state: directory

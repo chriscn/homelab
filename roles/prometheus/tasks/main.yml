@@ -1,0 +1,19 @@
+- name: Setup prometheus base
+  ansible.builtin.import_tasks: base.yml
+- name: Setup blackbox
+  ansible.builtin.import_tasks: blackbox.yml
+- name: Setup ping
+  ansible.builtin.import_tasks: ping.yml
+- name: Setup speedtest
+  ansible.builtin.import_tasks: speedtest.yml
+- name: Setup prometheus
+  ansible.builtin.import_tasks: prometheus.yml
+- name: Restart docker containers
+  community.docker.docker_container:
+    name: "{{ item }}"
+    restart: true
+  with_items:
+    - prometheus
+    - prometheus_blackbox
+    - prometheus_ping
+    - prometheus_speedtest

@@ -1,0 +1,17 @@
+- name: Create Blackbox config file
+  ansible.builtin.template:
+    src: blackbox.yml.j2
+    dest: /etc/prometheus/blackbox.yml
+
+- name: Run Blackbox Exporter
+  community.docker.docker_container:
+    name: prometheus_blackbox
+    image: "quay.io/prometheus/blackbox-exporter:{{ blackbox_exporter_version }}"
+    networks:
+      - name: prometheus_priv
+        aliases: [blackbox]
+    volumes:
+      - "/etc/prometheus:/etc/prometheus:ro"
+    command: [--config.file=/etc/prometheus/blackbox.yml]
+    ports:
+      - 9115:9115

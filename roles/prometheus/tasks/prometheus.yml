@@ -1,0 +1,28 @@
+- name: Create Prometheus data volume
+  community.docker.docker_volume:
+    name: prometheus_data
+    state: present
+
+- name: Create Prometheus config file
+  ansible.builtin.template:
+    src: prometheus.yml.j2
+    dest: /etc/prometheus/prometheus.yml
+    mode: 0744
+
+- name: Run Prometheus
+  community.docker.docker_container:
+    name: prometheus
+    image: docker.io/prom/prometheus:{{ prometheus_version }}
+    pull: true
+    restart_policy: always
+    networks:
+      - name: prometheus_priv
+        aliases: [prometheus]
+    volumes:
+      - "/etc/prometheus:/etc/prometheus:ro"
+      - "prometheus_data:/prometheus"
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.retention.time=1y
+    ports:
+      - 9090:9090
