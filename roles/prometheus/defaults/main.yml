@@ -1,33 +1,8 @@
 prometheus_version: v2.47.1
 blackbox_exporter_version: v0.24.0
 prometheus_blackbox_http_checks:
-  # Core
-  - https://yusu.org
-  - https://york.ac.uk
-  - https://yu.sums.su
-  - https://pluto.sums.su/api/sites
-  # Google Sites
-  - https://college-committee.yusu.org
-  - https://college-sport.yusu.org
-  - https://rep-hub.yusu.org
-  - https://resource-hub.yusu.org
-  # Student Society Websites
-  - https://yorktechsoc.org
-  - https://ystv.co.uk
-  - https://ury.org.uk
-  - https://yorkaerospacerocketry.com/
-  # College Websites
-  - https://alcuincollege.com/
-  - https://www.constantinecollege.co.uk/
-  # Other
-  - https://links.yusu.org
-  - https://yusu.staffsavvy.me
-  - https://docs.yusu.org
-  - https://grafana.yusu.org
-  - https://pisignage.com
-  - https://signage.yusu.org
-  - https://sums-web.com
-  - https://apply.yusu.org
+  - https://chrisnethercott.co.uk
+  - https://nethercott.org
 prometheus_ping_checks:
   - 192.168.5.5
   - 192.168.5.1
