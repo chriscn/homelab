@@ -3,3 +3,4 @@
 
 # Environmental Secrets
 .env*
+.vscode
