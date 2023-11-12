@@ -1,0 +1,22 @@
+- name: Deploy homelab
+  hosts: all
+  pre_tasks:
+    - name: Update apt cache
+      become: true
+      ansible.builtin.apt:
+        cache_valid_time: 86000 # 1 day
+        clean: true
+        upgrade: true
+    - name: Update tailscale to latest version
+      become: true
+      ansible.builtin.apt:
+        name: tailscale
+        state: present
+        update_cache: true
+
+  # A collection of useful roles, mainly around security and os_hardening
+  roles:
+    - geerlingguy.ntp
+    - geerlingguy.security
+    - devsec.hardening.os_hardening
+    - devsec.hardening.ssh_hardening
