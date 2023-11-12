@@ -18,6 +18,11 @@ Status: **Early Alpha**
 
 This section provides a high level overview of the project. Please see the [documentation](#deployment) for further information.
 
+### Bootstrapping
+
+The communication layer is handled by [Tailscale](https://tailscale.com); including SSH communication. This takes the hassel away of managing SSH keys
+
+
 ### Hardware
 
 Each server at the moment has a specific role; one is Storage, one is for running services such as [Home Assistant](https://home-assistant.io), and one just sits for me to play with.
