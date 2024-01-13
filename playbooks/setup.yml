@@ -1,51 +1,18 @@
-- name: Create ansible user with passwordless sudo
-  hosts: all
-  remote_user: root
-  vars:
-    username: ansible
-    ansible_ssh_user: root
-  tasks:
-    - name: Create user ({{ username }})
-      ansible.builtin.user:
-        name: "{{ username }}"
-        comment: Ansible User
-        group: sudo
-    - name: Allow passwordless sudo ({{ username }})
-      ansible.builtin.lineinfile:
-        dest: /etc/sudoers
-        line: "{{ username }} ALL=(ALL) NOPASSWD:ALL"
-        validate: "visudo -cf %s"
-      notify: Restart Sudo
-  handlers:
-    - name: Restart Sudo
-      ansible.builtin.service:
-        name: sudo
-        state: restarted
-
-- name: Update and harden homelab
-  hosts: all
-  become: true
-  pre_tasks:
-    - name: Update apt cache
-      ansible.builtin.apt:
-        cache_valid_time: 86400 # 1 day
-        upgrade: true
-    - name: Update tailscale to the latest version
-      ansible.builtin.apt:
-        name: tailscale
-        state: present
-        update_cache: true
-
-- name: Installs NTP functionality and set pool area to Europe
-  hosts: all
+- name: Install zsh with antigen plugin manager
+  hosts: homelab
   become: true
   roles:
-    - geerlingguy.ntp
-  vars:
-    ntp_area: europe
-
-- name: Harden host
-  hosts: all
-  become: true
-  roles:
-    - geerlingguy.security
+    - role: gantsign.antigen
+      users:
+        - username: christopher
+          antigen_libraries:
+            - name: oh-my-zsh
+          antigen_theme:
+            name: robbyrussell
+          antigen_bundles:
+            - name: git
+            - name: pip
+            - name: zsh-syntax-highlighting
+              url: zsh-users/zsh-syntax-highlighting
+            - name: zsh-autosuggestions
+              url: zsh-users/zsh-autosuggestion

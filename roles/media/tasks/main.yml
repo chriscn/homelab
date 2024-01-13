@@ -1,4 +1,0 @@
-- name: Perform base tasks
-  ansible.builtin.import_task: base.yml
-- name: Setup docker containers
-  ansible.builtin.import_task: containers.yml

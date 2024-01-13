@@ -1,8 +1,0 @@
-prometheus_version: v2.47.1
-blackbox_exporter_version: v0.24.0
-prometheus_blackbox_http_checks:
-  - https://chrisnethercott.co.uk
-  - https://nethercott.org
-prometheus_ping_checks:
-  - 192.168.5.5
-  - 192.168.5.1
