@@ -1,0 +1,38 @@
+- name: Create prometheus docker volume
+  community.docker.docker_volume:
+    name: prometheus_data
+    state: present
+- name: Create monitoring network
+  community.docker.docker_network:
+    name: monitoring
+    state: present
+- name: Create prometheus configuration directory
+  ansible.builtin.file:
+    path: /etc/prometheus
+    state: directory
+- name: Copy prometheus template file
+  ansible.builtin.template:
+    src: prometheus.yml.j2
+    dest: /etc/prometheus/prometheus.yml
+- name: Create prometheus container
+  community.docker.docker_container:
+    name: prometheus
+    image: prom/prometheus
+    state: started
+    restart_policy: always
+    ports:
+      - "9090:9090"
+    volumes:
+      - prometheus_data:/prometheus
+    networks:
+      - name: monitoring
+- name: Create grafana container
+  community.docker.docker_container:
+    name: grafana
+    image: grafana/grafana
+    state: started
+    restart_policy: always
+    ports:
+      - "3000:3000"
+    networks:
+      - name: monitoring

@@ -1,0 +1,26 @@
+- name: Create ansible user
+  hosts: homelab
+  become: true
+  tasks:
+    - name: Create ansible user
+      ansible.builtin.user:
+        name: ansible
+        state: present
+        shell: /bin/bash
+        password: "{{ 'ansible' | password_hash('sha512') }}"
+        generate_ssh_key: true
+
+    - name: Allow passwordless sudo for ansible user
+      ansible.builtin.lineinfile:
+        dest: /etc/sudoers
+        line: "ansible ALL=(ALL) NOPASSWD:ALL"
+        validate: "visudo -cf %s"
+        state: present
+        backup: true
+    - name: Copy SSH key to ansible user
+      ansible.posix.authorized_key:
+        user: ansible
+        state: present
+        key: "{{ lookup('file', '~/.ssh/id_ed25519.pub') }}"
+  vars:
+    ansible_user: christopher

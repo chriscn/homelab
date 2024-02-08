@@ -1,18 +1,69 @@
-- name: Install zsh with antigen plugin manager
-  hosts: homelab
+- name: Initial setup of hosts
+  hosts: all
   become: true
+  tasks:
+    - name: APT Update
+      ansible.builtin.apt:
+        update_cache: true
+    - name: Install common useful packages
+      ansible.builtin.apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - htop
+        - btop
+        - grepcidr
+        - curl
+        - wget
+        - git
+        - unzip
+        - zip
+        - jq
+        - dnsutils
+        - net-tools
+        - iperf3
+        - tree
+        - tmux
   roles:
-    - role: gantsign.antigen
-      users:
-        - username: christopher
-          antigen_libraries:
-            - name: oh-my-zsh
-          antigen_theme:
-            name: robbyrussell
-          antigen_bundles:
-            - name: git
-            - name: pip
-            - name: zsh-syntax-highlighting
-              url: zsh-users/zsh-syntax-highlighting
-            - name: zsh-autosuggestions
-              url: zsh-users/zsh-autosuggestion
+    - geerlingguy.security
+    - geerlingguy.ntp
+    - geerlingguy.docker
+    - geerlingguy.node_exporter
+  vars:
+    ntp_timezone: Europe/London
+    node_exporter_arch: "{{ 'amd64' if ansible_architecture == 'x86_64' else ('arm64' if ansible_architecture == 'aarch64' else ansible_architecture) }}"
+- name: Setup ZSH and Antigen
+  hosts: all
+  become: true
+  tasks:
+    - name: Install ZSH
+      ansible.builtin.apt:
+        name: zsh
+        state: present
+    - name: Set ZSH as default shell
+      ansible.builtin.user:
+        name: "{{ ansible_user }}"
+        shell: /bin/zsh
+    - name: Create antigen directory
+      ansible.builtin.file:
+        path: /etc/antigen
+        state: directory
+        mode: "0777"
+    - name: Install Antigen
+      ansible.builtin.get_url:
+        url: https://git.io/antigen
+        dest: /etc/antigen/antigen.zsh
+        owner: "root"
+        group: "root"
+        mode: "0777"
+    - name: Copy .zshrc to following users
+      ansible.builtin.copy:
+        src: files/zshrc
+        dest: /home/{{ item }}/.zshrc
+        owner: "{{ item }}"
+        group: "{{ item }}"
+        mode: "0644"
+      loop:
+        - "{{ ansible_user }}"
+        - root
+        - christopher
