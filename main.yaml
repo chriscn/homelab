@@ -1,0 +1,9 @@
+- name: Homelab CI / CD
+  hosts: all
+  become: true
+  vars:
+    ansible_become_password: "{{ users['ansible'] | eyaml(eyaml_keys) }}"
+  tasks:
+    - name: Debug
+      ansible.builtin.debug:
+        msg: "Hello, World!"
