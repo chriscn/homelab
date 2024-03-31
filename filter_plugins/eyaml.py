@@ -1,4 +1,3 @@
-
 """Decrypt secrets using Hiera's EYAML."""
 
 import os
@@ -9,27 +8,31 @@ from ansible.errors import AnsibleFilterError
 
 
 def eyaml(encrypted, keys):
-    os.environ['PRIVKEY'] = slurp(keys['priv'])
-    os.environ['PUBKEY'] = slurp(keys['pub'])
-    encrypted = re.sub(r'\s', '', encrypted, re.MULTILINE)
-    cmd = ["eyaml", "decrypt",
-           "--pkcs7-private-key-env-var=PRIVKEY",
-           "--pkcs7-public-key-env-var=PUBKEY"]
+    os.environ["PRIVKEY"] = slurp(keys["priv"])
+    os.environ["PUBKEY"] = slurp(keys["pub"])
+    encrypted = re.sub(r"\s", "", encrypted, re.MULTILINE)
+    cmd = [
+        "eyaml",
+        "decrypt",
+        "--pkcs7-private-key-env-var=PRIVKEY",
+        "--pkcs7-public-key-env-var=PUBKEY",
+    ]
 
     proc = subprocess.run(
         cmd + ["-s", encrypted],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         encoding="utf-8",
-        check=True)
+        check=True,
+    )
 
     # What a nice surprise: eyaml doesn't manage its exit code correctly.
     output = proc.stdout
 
     if (not output) and " @ " in proc.stderr:
-        raise AnsibleFilterError("Error running %s: %s" %
-                                 (" ".join(cmd + ["-s", "..."]),
-                                  proc.stderr))
+        raise AnsibleFilterError(
+            "Error running %s: %s" % (" ".join(cmd + ["-s", "..."]), proc.stderr)
+        )
 
     if "\n" not in output.rstrip():
         output = output.rstrip()
@@ -38,18 +41,9 @@ def eyaml(encrypted, keys):
 
 
 def slurp(path):
-    if path.startswith('/keybase/'):
-        # Thank you, https://github.com/keybase/client/issues/24636 ...
-        kbfs_out = subprocess.check_output(['keybase', 'fs', 'read', path])
-        if isinstance(kbfs_out, bytes):
-            # (and additional thanks to Python for changing your mind about the return
-            # type of a core API in between versions 2 and 3)
-            return kbfs_out.decode("ascii")
-        else:
-            return kbfs_out
-    else:
-        return open(path).read()
+    return open(path).read()
+
 
 class FilterModule(object):
     def filters(self):
-        return {'eyaml': eyaml}
+        return {"eyaml": eyaml}
