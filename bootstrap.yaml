@@ -1,22 +1,23 @@
 - name: Bootstrap a new host, create a personal user with SSH Key access etc
-  hosts: remote
+  hosts: all
   tasks:
-    - name: Create christopher user
+    - name: Create user
       ansible.builtin.user:
-        name: christopher
-        comment: "Christopher Nethercott"
+        name: "{{ item }}"
         shell: /bin/bash
         groups: sudo
         append: true
         state: present
         createhome: true
         generate_ssh_key: true
-        password: "{{ users['christopher'] | eyaml(eyaml_keys) | password_hash('sha512', 65534 | random(seed=inventory_hostname) | string) }}"
-    - name: Allow SSH access to christopher
+        password: "{{ users[item] | eyaml(eyaml_keys) | password_hash('sha512', 65534 | random(seed=inventory_hostname) | string) }}"
+      loop: "{{ users.keys() }}"
+    - name: Allow SSH access
       ansible.posix.authorized_key:
-        user: christopher
+        user: "{{ item }}"
         key: https://github.com/chriscn.keys
         state: present
+      loop: "{{ users.keys() }}"
     - name: Disable password ssh access
       ansible.builtin.lineinfile:
         path: /etc/ssh/sshd_config
