@@ -4,6 +4,10 @@
   vars:
     ansible_become_password: "{{ users['ansible'] | eyaml(eyaml_keys) }}"
   tasks:
-    - name: Debug
-      ansible.builtin.debug:
-        msg: "Hello, World!"
+    - name: Update packages
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: true
+        autoremove: true
+        autoclean: true
+        cache_valid_time: 3600
