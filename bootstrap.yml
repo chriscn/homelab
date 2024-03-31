@@ -11,7 +11,7 @@
         state: present
         createhome: true
         generate_ssh_key: true
-        password: "{{ user_passwords['christopher'] | eyaml(eyaml_keys) | password_hash('sha512', 65534 | random(seed=inventory_hostname) | string) }}"
+        password: "{{ users['christopher'] | eyaml(eyaml_keys) | password_hash('sha512', 65534 | random(seed=inventory_hostname) | string) }}"
     - name: Allow SSH access to christopher
       ansible.posix.authorized_key:
         user: christopher
