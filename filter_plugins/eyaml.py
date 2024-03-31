@@ -1,4 +1,5 @@
 """Decrypt secrets using Hiera's EYAML."""
+# Credit: https://github.com/epfl-si/ansible-module-eyaml
 
 import os
 import re
