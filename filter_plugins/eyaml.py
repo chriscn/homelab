@@ -7,10 +7,14 @@ import subprocess
 
 from ansible.errors import AnsibleFilterError
 
+KEYS = {
+    'priv': 'keys/private_key.pkcs7.pem',
+    'pub': 'keys/public_key.pkcs7.pem',
+}
 
-def eyaml(encrypted, keys):
-    os.environ["PRIVKEY"] = slurp(keys["priv"])
-    os.environ["PUBKEY"] = slurp(keys["pub"])
+def eyaml(encrypted):
+    os.environ["PRIVKEY"] = slurp(KEYS["priv"])
+    os.environ["PUBKEY"] = slurp(KEYS["pub"])
     encrypted = re.sub(r"\s", "", encrypted, re.MULTILINE)
     cmd = [
         "eyaml",

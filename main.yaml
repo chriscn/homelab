@@ -2,7 +2,7 @@
   hosts: all
   become: true
   vars:
-    ansible_become_password: "{{ users['ansible'] | eyaml(eyaml_keys) }}"
+    ansible_become_password: "{{ users['ansible'] | eyaml }}"
   tasks:
     - name: Update packages
       ansible.builtin.apt:
