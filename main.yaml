@@ -1,10 +1,10 @@
 - name: Homelab CI / CD
   hosts: all
-  become: true
   vars:
     ansible_become_password: "{{ users['ansible'] | eyaml }}"
   tasks:
     - name: Update packages
+      become: true
       ansible.builtin.apt:
         update_cache: true
         upgrade: true
