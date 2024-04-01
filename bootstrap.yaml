@@ -1,4 +1,4 @@
-- name: Bootstrap a new host, create a personal user with SSH Key access etc
+- name: Bootstrap a new host, create a personal user and ansible with SSH Key access etc
   hosts: all
   tasks:
     - name: Create user
@@ -21,8 +21,8 @@
     - name: Disable password ssh access
       ansible.builtin.lineinfile:
         path: /etc/ssh/sshd_config
-        regexp: '^PasswordAuthentication'
-        line: 'PasswordAuthentication no'
+        regexp: "^PasswordAuthentication"
+        line: "PasswordAuthentication no"
         state: present
       notify: ssh::restart
   handlers:
