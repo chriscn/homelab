@@ -3,15 +3,6 @@
   vars:
     ansible_become_password: "{{ users['ansible'] | eyaml }}"
   tasks:
-    - name: Update packages
-      become: true
-      ansible.builtin.apt:
-        update_cache: true
-        upgrade: true
-        autoremove: true
-        autoclean: true
-        cache_valid_time: 3600
-      when: ansible_os_family == 'Debian'
     - name: Install host roles dynamically based on variables
       ansible.builtin.include_role:
         name: "{{ item }}"
