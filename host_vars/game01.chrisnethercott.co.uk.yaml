@@ -22,3 +22,5 @@ factorio_metrics: true
 
 factorio_admins:
   - Thorin17
+
+factorio_autosave_slots: 25
