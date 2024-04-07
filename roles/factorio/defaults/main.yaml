@@ -14,3 +14,5 @@ factorio_password: ""
 factorio_token: ""
 
 factorio_game_password: ""
+
+factorio_metrics: false

@@ -22,3 +22,7 @@
     src: server-settings.json.j2
     dest: /srv/docker/factorio/config/server-settings.json
   notify: factorio::restart
+- name: S Prometheus factorio_metrics
+  ansible.builtin.import_tasks:
+    name: factorio-metrics.yaml
+  when: factorio_metrics
