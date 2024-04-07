@@ -41,6 +41,9 @@
         state: directory
         mode: "0755"
       when: enable_docker
+    - name: Harden system security
+      ansible.builtin.import_role:
+        name: geerlingguy.security
   handlers:
     - name: ssh::restart
       ansible.builtin.service:

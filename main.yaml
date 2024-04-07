@@ -1,7 +1,5 @@
 - name: Homelab CI / CD
   hosts: all
-  vars:
-    ansible_become_password: "{{ users['ansible'] | eyaml }}"
   tasks:
     - name: Install host roles dynamically based on variables
       ansible.builtin.include_role:
