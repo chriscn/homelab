@@ -12,6 +12,7 @@
         generate_ssh_key: true
         password: "{{ users[item] | eyaml | password_hash('sha512', 65534 | random(seed=inventory_hostname) | string) }}"
       loop: "{{ users.keys() }}"
+      when: users is defined
     - name: Allow SSH access
       ansible.posix.authorized_key:
         user: "{{ item }}"

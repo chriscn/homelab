@@ -12,3 +12,11 @@
         autoclean: true
         cache_valid_time: 3600
       when: ansible_os_family == 'Debian'
+    - name: Install Docker on hosts
+      ansible.builtin.include_role:
+        name: geerlingguy.docker
+      vars:
+        docker_users: "{{ users }}"
+        docker_install_compose: true
+      when: enable_docker
+    
