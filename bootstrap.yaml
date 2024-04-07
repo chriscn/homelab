@@ -26,6 +26,21 @@
         line: "PasswordAuthentication no"
         state: present
       notify: ssh::restart
+    - name: Install Docker on hosts
+      ansible.builtin.include_role:
+        name: geerlingguy.docker
+      vars:
+        docker_users: "{{ users }}"
+        docker_install_compose: true
+      when: enable_docker
+    - name: Create /srv/docker directory
+      ansible.builtin.file:
+        path: /srv/docker
+        owner: root
+        group: docker
+        state: directory
+        mode: "0755"
+      when: enable_docker
   handlers:
     - name: ssh::restart
       ansible.builtin.service:
