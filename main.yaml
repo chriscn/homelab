@@ -6,3 +6,5 @@
         name: "{{ item }}"
       loop: "{{ host_roles }}"
       when: host_roles is defined
+  vars:
+    ansible_become_password: "{{ users['ansible'] | eyaml }}"
