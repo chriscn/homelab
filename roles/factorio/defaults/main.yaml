@@ -18,3 +18,10 @@ factorio_game_password: ""
 factorio_metrics: false
 
 factorio_admins: []
+
+factorio_autosave_interval: 10
+factorio_autosave_slots: 5
+
+factorio_afk_autokick_interval: 0
+
+factorio_auto_pause: true
