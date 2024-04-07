@@ -21,9 +21,4 @@
   ansible.builtin.template:
     src: server-settings.json.j2
     dest: /srv/docker/factorio/config/server-settings.json
-  register: factorio_settings
-- name: Restart factorio container
-  community.docker.docker_container:
-    name: factorio
-    restart: true
-  when: factorio_settings.changed
+  notify: factorio::restart
