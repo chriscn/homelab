@@ -1,9 +1,0 @@
----
-- name: Create factorio metrics container
-  community.docker.docker_container:
-    name: factorio-metrics
-    image: ghcr.io/janten/factorio-stats
-    env:
-      - FACTORIO_ADDRESS=factorio
-      - FACTORIO_PORT=27015
-      - FACTORIO_PASSWORD={{ lookup('file', '/srv/docker/factorio/config/rconpw') }}
