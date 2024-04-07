@@ -22,3 +22,8 @@
     src: server-settings.json.j2
     dest: /srv/docker/factorio/config/server-settings.json
   notify: factorio::restart
+- name: Copy factorio admins
+  ansible.builtin.copy:
+    content: "{{ factorio_admins | tojson }}"
+    dest: /srv/docker/factorio/config/server-adminlist.json
+  notify: factorio::restart
