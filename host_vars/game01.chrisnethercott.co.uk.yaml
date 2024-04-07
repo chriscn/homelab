@@ -5,3 +5,17 @@ users:
 ansible_user: root
 
 enable_docker: true
+
+host_roles:
+  - factorio
+
+# Factorio bits and bobs
+factorio_server_name: "Erebor"
+factorio_server_description: "A free server for all to play on"
+factorio_server_tags:
+  - "public"
+  - "pve"
+  - "dedicated"
+
+factorio_username: "Thorin17"
+factorio_token: ENC[PKCS7,MIIBiQYJKoZIhvcNAQcDoIIBejCCAXYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAQ9GmGLcctbGjX/wE4UwwBfd7y2dj8KWZDSX/lgMYxwAh2TaLtFfvY/7KbZbq1ywHZ2NVxrvpDTo2Wk9Yrq7hi7wS0E1HkgqMwvP/K2TaoHXTlLkJm/jvkxNUz0At30tEHSa3yjKecbxnOudc/Dd65R/N+u8TviFRQ1RmsoZiKtcY603nC/JdBLGe5gfWQzk3eHDHz9LuIUScwZKdcqIMUPUVLITXddUbUuyngrdhTI59Fd5/UdUr+FmRHbqQrRTfcdyCJ1R3BfMuMwudjsIHiElP7eKF/WWzvHSlwnHTRKmnuq8XpuXFJu72HfSGf+VyXRwg0WJyspiNX+iNJFLr9zBMBgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBB3PTwAEQDgkavBfL58lTWQgCDl9O50U8o1CeMv+hh+HRlCF5gWRVH25r1iH86pD7zQEQ==]

@@ -1,0 +1,16 @@
+---
+# defaults file for factorio
+factorio_server_name: "Factorio Server"
+factorio_server_description: "A Factorio Server, hosted in Docker, managed by Ansible"
+factorio_server_tags: []
+
+factorio_max_players: 0
+
+factorio_visibility_public: true
+factorio_visibility_lan: true
+
+factorio_username: ""
+factorio_password: ""
+factorio_token: ""
+
+factorio_game_password: ""
