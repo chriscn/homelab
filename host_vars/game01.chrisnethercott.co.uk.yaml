@@ -6,6 +6,7 @@ enable_docker: true
 
 host_roles:
   - factorio
+  - caddy
 
 # Factorio bits and bobs
 factorio_server_name: Erebor
