@@ -2,7 +2,7 @@
   "_comment_all": "{{ ansible_managed }}",
   "name": "{{ factorio_server_name }}",
   "description": "{{ factorio_server_description }}",
-  "tags": "{{ factorio_server_tags }}",
+  "tags": {{ factorio_server_tags | tojson }},
 
   "_comment_max_players": "Maximum number of players allowed, admins can join even a full server. 0 means unlimited.",
   "max_players": {{ factorio_max_players }},
@@ -11,8 +11,8 @@
                           "lan: Game will be broadcast on LAN"],
   "visibility":
   {
-    "public": {{ factorio_visibility_public }},
-    "lan": {{ factorio_visibility_lan }}
+    "public": {{ factorio_visibility_public | tojson }},
+    "lan": {{ factorio_visibility_lan | tojson }}
   },
 
   "_comment_credentials": "Your factorio.com login credentials. Required for games with visibility public",
