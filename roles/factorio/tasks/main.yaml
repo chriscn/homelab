@@ -1,6 +1,7 @@
 ---
 # tasks file for factorio
 - name: Create factorio directory
+  become: true
   ansible.builtin.file:
     path: /srv/docker/factorio
     state: directory
@@ -18,11 +19,13 @@
     volumes:
       - /srv/docker/factorio:/factorio
 - name: Copy factorio settings
+  become: true
   ansible.builtin.template:
     src: server-settings.json.j2
     dest: /srv/docker/factorio/config/server-settings.json
   notify: factorio::restart
 - name: Copy factorio admins
+  become: true
   ansible.builtin.copy:
     content: "{{ factorio_admins | tojson }}"
     dest: /srv/docker/factorio/config/server-adminlist.json
