@@ -4,7 +4,7 @@
     - name: Install host roles dynamically based on variables
       ansible.builtin.include_role:
         name: "{{ item }}"
-      loop: "{{ host_roles }}"
+      loop: "{{ host_roles | sort }}"
       when: host_roles is defined
   vars:
     ansible_become_password: "{{ users['ansible'] | eyaml }}"
