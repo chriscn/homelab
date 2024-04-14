@@ -1,5 +1,5 @@
 - name: Bootstrap a new host, create a personal user and ansible with SSH Key access etc
-  hosts: all
+  hosts: hetzner
   tasks:
     - name: Create user
       ansible.builtin.user:
