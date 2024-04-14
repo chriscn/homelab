@@ -1,4 +1,5 @@
 {{ inventory_hostname }} {
-    root * /srv/www
+    root * /var/www/html
+    encode gzip
     file_server
 }

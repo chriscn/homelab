@@ -38,5 +38,5 @@
     volumes:
       - /srv/docker/caddy:/data
       - /srv/docker/caddy/Caddyfile:/etc/caddy/Caddyfile
-      - /var/www/html:/srv/www
+      - /var/www/html:/var/www/html
   notify: caddy::restart
