@@ -11,7 +11,7 @@
 - name: Create factorio container
   community.docker.docker_container:
     name: factorio
-    image: factoriotools/factorio
+    image: factoriotools/factorio:stable
     state: started
     restart_policy: always
     ports:
