@@ -1,0 +1,10 @@
+paperless_ngx_db_type: postgresql
+paperless_ngx_system_group: paperless
+paperless_ngx_system_user: paperless
+
+caddy_conf_filename: Caddyfile
+caddy_config: |
+  {{ paperless_ngx_conf_domain }} {
+    encode zstd gzip
+    reverse_proxy localhost:{{ paperless_ngx_conf_port }}
+  }

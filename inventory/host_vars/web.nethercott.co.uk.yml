@@ -1,0 +1,11 @@
+caddy_config: |
+  www.nethercott.co.uk {
+    encode zstd gzip
+    respond "Hello, world!"
+  }
+
+  nethercott.co.uk {
+    encode zstd gzip
+    redir https://www.nethercott.co.uk{uri}
+  }
+caddy_conf_update: true
