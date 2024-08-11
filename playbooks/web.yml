@@ -1,0 +1,4 @@
+- name: Setup Caddy on web hosts
+  hosts: web
+  roles:
+    - caddy_ansible.caddy_ansible
