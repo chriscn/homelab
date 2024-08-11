@@ -1,5 +1,0 @@
----
-# tasks file for home-assistant
-- name: Debug
-  ansible.builtin.debug:
-    msg: "Running home-assistant role"

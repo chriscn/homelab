@@ -1,6 +1,0 @@
----
-# handlers file for caddy
-- name: caddy::restart
-  community.docker.docker_container:
-    name: caddy
-    restart: true

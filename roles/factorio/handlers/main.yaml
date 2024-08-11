@@ -1,6 +1,0 @@
----
-# handlers file for factorio
-- name: factorio::restart
-  community.docker.docker_container:
-    name: factorio
-    restart: true
