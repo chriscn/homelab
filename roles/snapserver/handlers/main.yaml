@@ -1,0 +1,6 @@
+---
+# handlers file for snapserver
+- name: snapserver::restart
+  ansible.builtin.systemd:
+    name: snapserver
+    state: restarted

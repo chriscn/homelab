@@ -1,0 +1,17 @@
+{{ ansible_managed | comment }}
+# /usr/lib/systemd/system/snapserver.service
+[Unit]
+Description=Snapcast server
+Documentation=man:snapserver(1)
+Wants=avahi-daemon.service
+After=network-online.target time-sync.target avahi-daemon.service
+
+[Service]
+EnvironmentFile=-/etc/default/snapserver
+ExecStart=/usr/bin/snapserver --logging.sink=system --server.datadir=${HOME} $SNAPSERVER_OPTS
+User={{ snapserver_user }}
+Group={{ snapserver_group }}
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

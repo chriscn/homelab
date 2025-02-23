@@ -1,0 +1,40 @@
+---
+# preflight tasks for snapserver
+- name: Get latest Snapcast release from GitHub
+  ansible.builtin.uri:
+    url: "{{ snapserver_repo }}"
+    return_content: yes
+  register: _snapserver_github_release
+
+- name: Set Snapcast version
+  ansible.builtin.set_fact:
+    snapserver_version: "{{ _snapserver_github_release.json.tag_name | regex_replace('^v', '') }}"
+  when: snapserver_version == "latest"
+
+- name: Determine Debian release
+  ansible.builtin.command: "cat /etc/os-release | grep VERSION_CODENAME | cut -d'=' -f2"
+  register: _snapserver_debian_release
+  changed_when: false
+
+- name: Check installed Snapserver version
+  ansible.builtin.command: snapserver --version
+  register: _snapserver_installed_version_output
+  ignore_errors: yes
+  changed_when: false
+
+- name: Extract installed Snapserver version
+  ansible.builtin.set_fact:
+    _snapserver_installed_version: "{{ _snapserver_installed_version_output.stdout | regex_search('snapserver v([0-9]+\.[0-9]+\.[0-9]+)', '\1') | first }}"
+  when: _snapserver_installed_version_output.stdout is defined
+
+- name: Find the correct Snapcast asset
+  ansible.builtin.set_fact:
+    _snapserver_deb_url: >-
+      {{ _snapserver_github_release.json.assets | map(attribute='browser_download_url') | select('search', 'snapserver_' ~ snapserver_version ~ '-1_' ~ snapserver_arch ~ '_' ~ _snapserver_debian_release.stdout ~ '\.deb') | list | first }}
+  when: _snapserver_installed_version is not defined or _snapserver_installed_version != snapserver_version
+
+- name: Download Snapcast package
+  ansible.builtin.get_url:
+    url: "{{ _snapserver_deb_url }}"
+    dest: "/tmp/snapserver_{{ snapserver_version }}-1_{{ snapserver_arch }}_{{ _snapserver_debian_release.stdout }}.deb"
+  when: _snapserver_deb_url is defined

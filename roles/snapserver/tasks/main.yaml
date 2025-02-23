@@ -1,0 +1,28 @@
+---
+# tasks file for snapserver
+- name: Pre-installation tasks for snapserver
+  ansible.builtin.import_tasks: preflight.yaml
+
+- name: Copy Snapserver Service file
+  ansible.builtin.template:
+    src: snapserver.service.j2
+    dest: /etc/systemd/system/snapserver.service
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Setup Snapserver Systemd service
+  ansible.builtin.systemd:
+    name: snapserver
+    enabled: true
+    state: started
+    daemon_reload: true
+
+- name: Copy Snapserver configuration
+  ansible.builtin.template:
+    src: snapserver.conf.j2
+    dest: /etc/snapserver.conf
+    owner: "{{ snapserver_user }}"
+    group: "{{ snapserver_group }}"
+    mode: '0644'
+    notify: snapserver::restart

@@ -1,0 +1,37 @@
+---
+# defaults file for snapserver
+snapserver_version: 'latest'
+
+snapserver_user: snapserver
+snapserver_group: snapserver
+
+## configuration values
+snapserver_threads: -1
+snapserver_pid_file: /var/run/snapserver.pid
+
+snapserver_http_rpc_enable: true
+snapserver_http_rpc_bind_to_address: 0.0.0.0
+snapserver_http_rpc_port: 1705
+
+snapserver_tcp_rpc_enable: false
+snapserver_tcp_rpc_bind_to_address: 0.0.0.0
+snapserver_tcp_rpc_port: 1704
+
+snapserver_stream_bind_to_address: 0.0.0.0
+snapserver_stream_port: 1704
+snapserver_stream_sources:
+  - type: spotify
+    host: librespot
+    options:
+      name: Spotify
+      bitrate: 320
+      devicename: Multiroom
+      normalize: true
+  - type: airplay
+    host: shairport-sync
+    options:
+      name: Airplay
+      devicename: Multiroom
+snapserver_sample_format: 44100:16:2
+snapserver_codec: flac
+snapserver_send_to_muted: false
