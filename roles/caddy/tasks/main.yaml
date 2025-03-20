@@ -1,0 +1,37 @@
+---
+# tasks file for caddy
+- name: Include caddy role
+  ansible.builtin.include_role:
+    name: caddy_ansible.caddy_ansible
+    public: true
+
+- name: Create Caddy sites directory
+  ansible.builtin.file:
+    name: /etc/caddy/sites
+    state: directory
+    owner: {{ caddy_user }}
+    group: {{ caddy_group }}
+
+- name: Create Caddy fallback directory
+  ansible.builtin.file:
+    name: /var/www/fallback
+    state: directory
+    owner: {{ caddy_user }}
+    group: {{ caddy_group }}
+
+- name: Copy Caddy fallback page
+  ansible.builtin.copy:
+    src: fallback/index.html
+    dest: /var/www/fallback/index.html
+    owner: {{ caddy_user }}
+    group: {{ caddy_group }}
+
+- name: Copy custom Caddy config
+  ansible.builtin.template:
+    src: {{ item.src }}
+    dest: {{ item.dest }}
+    owner: {{ caddy_user }}
+    group: {{ caddy_group }}
+  loop:
+    - { src: 'authelia.caddy.j2', dest: '/etc/caddy/authelia.caddy' }
+    - { src: 'proxy.caddy.j2', dest: '/etc/caddy/proxy.caddy' }

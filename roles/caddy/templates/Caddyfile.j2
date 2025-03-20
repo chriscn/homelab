@@ -1,0 +1,19 @@
+{{ ansible_managed | comment }}
+{
+    email ccnethercott@gmail.com
+    import /etc/caddy/proxy.caddy
+    import /etc/caddy/authelia.caddy
+}
+
+(chrisnethercott-wildcard) {
+    tls {
+        dns cloudflare {{ caddy_cloudflare_token }}
+    }
+}
+
+import /etc/caddy/sites/*.caddy
+
+*.chrisnethercott.co.uk {
+    root * /var/www/fallback
+    file_server
+}

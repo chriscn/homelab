@@ -1,0 +1,28 @@
+{{ ansible_managed | comment }}
+(proxy) {
+    transport http {
+        keepalive 60
+        read_buffer 4KB
+        write_buffer 4KB
+        read_timeout 240s
+        write_timeout 240s
+        dial_timeout 240s
+    }
+
+    header_up Connection {>Connection}
+    header_up Early-Data {>Early-Data}
+    header_up Host {host}
+    header_up Proxy ""
+    header_up Upgrade {>Upgrade}
+    header_up X-Forwarded-For {remote_host}
+    header_up X-Forwarded-Host {host}
+    header_up X-Forwarded-Method {method}
+    header_up X-Forwarded-Port {server_port}
+    header_up X-Forwarded-Proto {scheme}
+    header_up X-Forwarded-Server {host}
+    header_up X-Forwarded-Ssl on
+    header_up X-Forwarded-Uri {uri}
+    header_up X-Original-Method {method}
+    header_up X-Original-URL {scheme}://{host}{uri}
+    header_up X-Real-IP {remote_host}
+}

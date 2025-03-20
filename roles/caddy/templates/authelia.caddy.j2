@@ -1,0 +1,9 @@
+{{ ansible_managed | comment }}
+(authelia) {
+    route {
+        forward_auth http://127.0.0.1:9091 {
+            uri /api/verify?rd=https://auth.chrisnethercott.co.uk
+            copy_headers Remote-User Remote-Groups Rermote-Name Remote-Email
+        }
+    }
+}
