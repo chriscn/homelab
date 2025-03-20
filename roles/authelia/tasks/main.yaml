@@ -1,0 +1,27 @@
+---
+# tasks file for authelia
+- name: Install required packages
+  ansible.builtin.apt:
+    name:
+      - ca-certificates
+      - curl
+    state: present
+
+- name: Download Authelia signing key
+  ansible.builtin.get_url:
+    url: https://apt.authelia.com/organization/signing.asc
+    dest: /usr/share/keyrings/authelia.asc
+    mode: '0644'
+    force: true
+
+- name: Add Authelia APT repository
+  ansible.builtin.apt_repository:
+    repo: "deb [arch={{ ansible_architecture }} signed-by=/usr/share/keyrings/authelia.asc] https://apt.authelia.com/stable/debian/debian all main"
+    filename: authelia
+    state: present
+    update_cache: true
+
+- name: Install Authelia
+  ansible.builtin.apt:
+    name: authelia
+    state: present
