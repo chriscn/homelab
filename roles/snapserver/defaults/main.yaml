@@ -27,6 +27,7 @@ snapserver_stream_sources:
       bitrate: 320
       devicename: Multiroom
       normalize: true
+      params: --cache /var/lib/librespot --enable-oauth
   - type: airplay
     host: shairport-sync
     options:
