@@ -1,0 +1,5 @@
+---
+# handlers file for initramfs
+- name: initramfs::update
+  ansible.builtin.command:
+    cmd: update-initramfs -uv

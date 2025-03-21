@@ -1,0 +1,25 @@
+---
+# tasks file for initramfs
+- name: Install dropbear-initramfs
+  ansible.builtin.apt:
+    name: dropbear-initramfs
+    state: present
+
+- name: Update DROPBEAR_OPTIONS
+  ansible.builtin.lineinfile:
+    path: /etc/dropbear/initramfs/dropbear.conf
+    regexp: ^DROPBEAR_OPTIONS=
+    line: DROPBEAR_OPTIONS="-I 180 -j -k -s -c cryptroot-unlock"
+  notify: initramfs::update
+
+- name: Update dropbear authorized_keys
+  ansible.builtin.copy:
+    content: |
+      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKH5kiCy+iJ40p6DAicIjX/U+CB4a2HvCA/Pci/+LO+r
+      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICNjsPw6qF/YBJT/5ObfH9Xmu7i3g+I957K2BQsfIzXq
+      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOo2vOiQv7s2cx7SdMqDuuomo39MaenSB9o7tsIoOXSv
+    dest: /etc/dropbear/initramfs/authorized_keys
+    owner: root
+    group: root
+    mode: "0600"
+  notify: initramfs::update
