@@ -1,0 +1,14 @@
+---
+- name: Download Sonarr
+  ansible.builtin.get_url:
+    url: https://services.sonarr.tv/v1/download/main/latest?version=4&os=linux&arch=x64
+    dest: /tmp/sonarr.tar.gz
+    mode: "0644"
+    force: true
+
+- name: Extract Sonarr
+  ansible.builtin.unarchive:
+    src: /tmp/sonarr.tar.gz
+    dest: /opt/sonarr/
+    remote_src: true
+    creates: /opt/sonarr/Sonarr

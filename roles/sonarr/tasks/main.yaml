@@ -1,0 +1,68 @@
+---
+# tasks file for sonarr
+- name: Install required packages
+  ansible.builtin.apt:
+    package:
+      - curl
+      - sqlite3
+      - wget
+      - python3-lxml
+    state: present
+
+- name: Install Sonarr
+  ansible.builtin.import_tasks:
+    file: install.yaml
+
+- name: Create sonarr group
+  ansible.builtin.group:
+    name: "{{ sonarr_group }}"
+    system: true
+    state: present
+
+- name: Create sonarr user
+  ansible.builtin.user:
+    name: "{{ sonarr_user }}"
+    group: "{{ sonarr_group }}"
+    system: true
+    shell: /usr/sbin/nologin
+    home: "{{ sonarr_home }}"
+    createhome: true
+    state: present
+
+- name: Create Sonarr data directory
+  ansible.builtin.file:
+    path: "{{ sonarr_data_dir }}"
+    state: directory
+    owner: "{{ sonarr_user }}"
+    group: "{{ sonarr_group }}"
+    mode: "0755"
+
+- name: Create Sonarr service file
+  ansible.builtin.template:
+    src: sonarr.service.j2
+    dest: /etc/systemd/system/sonarr.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - systemd::reload
+    - sonarr::restart
+
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Start Sonarr
+  ansible.builtin.systemd:
+    name: sonarr
+    state: started
+    enabled: true
+
+- name: Disable AuthenticationRequired in Sonarr
+  community.general.xml:
+    path: /var/lib/sonarr/config.xml
+    xpath: /Config/AuthenticationMethod
+    value: External
+    state: present
+  notify:
+    - sonarr::restart

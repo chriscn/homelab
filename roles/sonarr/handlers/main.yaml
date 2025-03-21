@@ -1,0 +1,17 @@
+---
+# handlers file for sonarr
+- name: systemd::reload
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: sonarr::start
+  ansible.builtin.systemd:
+    name: sonarr
+    state: started
+    enabled: true
+
+- name: sonarr::restart
+  ansible.builtin.systemd:
+    name: sonarr
+    state: restarted
+    enabled: true
