@@ -1,0 +1,10 @@
+---
+- name: Homelab Setup
+  hosts: media
+  become: true
+  roles:
+  #- initramfs
+  #- caddy
+    - sonarr
+
+#  - caddy
