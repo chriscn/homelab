@@ -1,0 +1,10 @@
+---
+security_ssh_permit_root_login: "yes"
+
+security_autoupdate_additional_origins:
+  - origin=Ubuntu,archive=${distro_codename}-updates
+security_autoupdate_enabled: true
+security_autoupdate_reboot: true
+security_autoupdate_reboot_time: "03:14"
+
+security_fail2ban_enabled: false

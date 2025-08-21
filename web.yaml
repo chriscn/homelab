@@ -1,0 +1,5 @@
+---
+- name: Setup remote webserver
+  hosts: web
+  roles:
+    - geerlingguy.security
