@@ -1,0 +1,74 @@
+- name: Update / install snapclient on hosts
+  hosts: snapclient
+  become: true
+  tasks:
+    - name: Disable overlayfs filesystem
+      shell: sudo raspi-config nonint disable_overlayfs 1
+    - name: Reboot to apply overlayfs changes
+      reboot:
+        msg: "Rebooting to apply overlayfs changes"
+        pre_reboot_delay: 5
+        reboot_timeout: 300
+    - name: Wait for hosts to come back online
+      wait_for_connection:
+        delay: 10
+        timeout: 300
+    - name: Disable root-ro filesystem
+      shell: sudo raspi-config nonint disable_bootro 1
+    - name: Reboot to apply root-ro filesystem changes
+      reboot:
+        msg: "Rebooting to apply root-ro filesystem changes"
+        pre_reboot_delay: 5
+        reboot_timeout: 300
+    - name: Wait for hosts to come back online
+      wait_for_connection:
+        delay: 10
+        timeout: 300
+    - name: Update authorized SSH keys from GitHub
+      ansible.posix.authorized_key:
+        user: "{{ ansible_user | default('pi') }}"
+        state: present
+        key: "{{ item }}"
+      loop: "{{ lookup('url', 'https://github.com/chriscn.keys').split(',') }}"
+    - name: Remove erroronous ssh key
+      ansible.posix.authorized_key:
+        user: "{{ ansible_user | default('pi') }}"
+        state: absent
+        key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKH5kiCy+iJ40p6DAicIjX/U+CB4a2HvCA/Pci/+LO+r,ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE0VWQCbEjjkHRPE7w/Jnw2PrNZgh0yS5Fl07G/VCkqu"
+    - name: Apply any outstanding updates
+      apt:
+        update_cache: yes
+        upgrade: full
+        autoremove: yes
+    - name: Get latest snapclient release
+      ansible.builtin.uri:
+        url: https://api.github.com/repos/badaix/snapcast/releases/latest
+        return_content: yes
+      register: latest_release
+
+    - name: Set snapclient version variable
+      set_fact:
+        snapclient_version: "{{ latest_release.json.tag_name | regex_replace('^v', '') }}"
+
+    - name: Determine architecture
+      set_fact:
+        snapclient_arch: "{{ 'armhf' if ansible_architecture == 'aarch64' else 'amd64' }}"
+    - name: Download and install snapclient
+      apt:
+        deb: "https://github.com/snapcast/snapcast/releases/download/v{{ snapclient_version }}/snapclient_{{ snapclient_version }}-1_{{ snapclient_arch }}_{{ ansible_lsb.codename }}.deb"
+    
+    - name: Re-enable overlayfs and reboot
+      shell: sudo raspi-config nonint enable_overlayfs 0
+      async: 1
+      poll: 0
+    
+    - name: Re-enabel root ro filesystem
+      shell: sudo raspi-config nonint enable_bootro 0
+      async: 1
+      poll: 0
+
+    - name: Reboot to apply filesystem changes
+      reboot:
+        msg: "Rebooting to apply filesystem changes"
+        pre_reboot_delay: 5
+        reboot_timeout: 300
